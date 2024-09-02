@@ -524,12 +524,10 @@ class WaveSurfer extends Player<WaveSurferEvents> {
 
   /** Get the duration of the audio in seconds */
   public getDuration(): number {
-    let duration = super.getDuration() || 0
-    // Fall back to the decoded data duration if the media duration is incorrect
-    if ((duration === 0 || duration === Infinity) && this.decodedData) {
-      duration = this.decodedData.duration
-    }
-    return duration
+    if (this.decodedData) return this.decodedData.duration
+    // Fall back to the audio data duration if the audio not decoded
+    // if super.getDuration == NAN, which means it's impossible to get the duration, should wait until onloadedmetadata trigger
+    return super.getDuration() || 0
   }
 
   /** Toggle if the waveform should react to clicks */
