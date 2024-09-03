@@ -433,9 +433,7 @@ class WaveSurfer extends Player<WaveSurferEvents> {
       if (staticDuration) {
         resolve(staticDuration)
       } else {
-        this.mediaSubscriptions.push(
-          this.onMediaEvent('loadedmetadata', () => resolve(this.getDuration()), { once: true }),
-        )
+        this.on('decode', (duration) => resolve(duration), { once: true })
       }
     })
 
